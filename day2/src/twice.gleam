@@ -7,10 +7,7 @@ import gleam/result
 import gleam/string
 import simplifile
 
-fn controlla_string_ha_doppioni_returna_str_in_int(
-  s: String,
-  str_a_len: Int,
-) -> Int {
+fn return_int_se_con_doppio(s: String, str_a_len: Int) -> Int {
   let start = s |> string.drop_end(str_a_len / 2)
   let end = s |> string.drop_start(str_a_len / 2)
   case start == end {
@@ -31,8 +28,7 @@ fn sum_twice_in_interval(a: Int, b: Int, sum: Int) -> Int {
       let str_a_len = string.length(str_a)
       case str_a_len % 2 == 0 {
         True -> {
-          let value =
-            controlla_string_ha_doppioni_returna_str_in_int(str_a, str_a_len)
+          let value = return_int_se_con_doppio(str_a, str_a_len)
           sum_twice_in_interval(a + 1, b, sum + value)
         }
         False -> {
