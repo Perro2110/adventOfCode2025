@@ -7,7 +7,7 @@ import gleam/result
 import gleam/string
 import simplifile
 
-fn return_int_se_con_doppio(s: String, str_a_len: Int) -> Int {
+fn f_core(s: String, str_a_len: Int) -> Int {
   let start = s |> string.drop_end(str_a_len / 2)
   let end = s |> string.drop_start(str_a_len / 2)
   case start == end {
@@ -20,7 +20,7 @@ fn return_int_se_con_doppio(s: String, str_a_len: Int) -> Int {
   }
 }
 
-fn sum_twice_in_interval(a: Int, b: Int, sum: Int) -> Int {
+fn f_two_rep(a: Int, b: Int, sum: Int) -> Int {
   case a > b {
     True -> sum
     False -> {
@@ -28,11 +28,11 @@ fn sum_twice_in_interval(a: Int, b: Int, sum: Int) -> Int {
       let str_a_len = string.length(str_a)
       case str_a_len % 2 == 0 {
         True -> {
-          let value = return_int_se_con_doppio(str_a, str_a_len)
-          sum_twice_in_interval(a + 1, b, sum + value)
+          let value = f_core(str_a, str_a_len)
+          f_two_rep(a + 1, b, sum + value)
         }
         False -> {
-          sum_twice_in_interval(a + 1, b, sum)
+          f_two_rep(a + 1, b, sum)
         }
       }
     }
@@ -46,7 +46,7 @@ fn calcola_val(s: String) -> Int {
 
   case res {
     [Ok(a), Ok(b)] -> {
-      sum_twice_in_interval(a, b, 0)
+      f_two_rep(a, b, 0)
     }
     _ -> 0
   }
