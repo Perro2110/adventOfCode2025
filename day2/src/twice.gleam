@@ -1,5 +1,3 @@
-////// Problem 2: per ogni intervallo prendi solo le coppie che si ripetono e sommmale
-
 import gleam/int
 import gleam/io
 import gleam/list
