@@ -24,35 +24,28 @@ brew install gleam  # macOS
 
 ```bash
 # Entra nella cartella del giorno
-cd day01
+cd day1
 
 # Esegui la soluzione
 gleam run
 
-# Esegui i test
-gleam test
-
-# Formatta il codice
-gleam format
 ```
 
 ## 📁 Struttura del progetto
 
 ```
 .
-├── day01/
+├── day1/
 │   ├── src/
-│   │   └── day01.gleam
-│   ├── test/
-│   │   └── day01_test.gleam
+│   │    ├── day1pt1.gleam
+│   │    └── day1pt2.gleam
 │   ├── input.txt
 │   └── gleam.toml
-├── day02/
+├── day2/
 │   ├── src/
-│   ├── test/
 │   ├── input.txt
 │   └── gleam.toml
-├── day03/
+├── day3/
 │   └── ...
 └── README.md
 ```
@@ -64,9 +57,9 @@ gleam format
 | 01     | ⭐      | ⭐      | ⭐⭐   |
 | 02     | ⭐      | ⭐      | ⭐⭐   |
 | 03     | ⭐      | ⭐      | ⭐⭐   |
-| ...    | ...     | ...     | ...    |
+| 04     | ⭐      | ...     | ...    |
 
-**Totale stelle: 6/25** 🌟
+**Totale stelle: 7/25** 🌟
 
 ## 📚 Risorse utili
 
