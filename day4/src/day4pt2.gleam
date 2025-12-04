@@ -42,8 +42,8 @@ import gleam/io
 import gleam/list
 import gleam/string
 
-fn conta(triples, griglia) {
-  triples
+fn conta_accessibili(griglia) {
+  griglia
   |> list.filter(fn(triple) {
     let #(lettera, x, y) = triple
     case lettera {
@@ -80,6 +80,48 @@ fn contavicini(triple, griglia) {
   |> list.length
 }
 
+fn rimuovi_accessibili(griglia) {
+  let accessibili =
+    griglia
+    |> list.filter(fn(triple) {
+      let #(lettera, x, y) = triple
+      case lettera {
+        "@" -> contavicini(triple, griglia) < 4
+        _ -> False
+      }
+    })
+
+  let nuova_griglia =
+    griglia
+    |> list.map(fn(triple) {
+      let #(lettera, x, y) = triple
+      let da_rimuovere =
+        accessibili
+        |> list.any(fn(acc) {
+          let #(_, ax, ay) = acc
+          x == ax && y == ay
+        })
+
+      case da_rimuovere {
+        True -> #(".", x, y)
+        False -> triple
+      }
+    })
+
+  #(list.length(accessibili), nuova_griglia)
+}
+
+fn rimuovi_iterativamente(griglia, totale_rimossi) {
+  let #(rimossi, nuova_griglia) = rimuovi_accessibili(griglia)
+  case rimossi {
+    0 -> totale_rimossi
+    _ -> {
+      io.println("Rimossi " <> int.to_string(rimossi) <> " rotoli")
+      rimuovi_iterativamente(nuova_griglia, totale_rimossi + rimossi)
+    }
+  }
+}
+
 pub fn main() {
   let s =
     "..@@.@@@@.
@@ -96,14 +138,13 @@ pub fn main() {
   let pollo = string.split(s, "\n")
   let triples =
     list.index_map(pollo, fn(row, y_pos) {
-      let chars = string.split(row, "") |> echo
+      let chars = string.split(row, "")
       list.index_map(chars, fn(lettera, x_pos) { #(lettera, x_pos, y_pos) })
     })
     |> list.flatten
 
-  let griglia = triples |> echo
+  let griglia = triples
 
-  let risultato = conta(griglia, griglia)
-
-  io.println("Rolls accessibili: " <> int.to_string(risultato))
+  let totale = rimuovi_iterativamente(griglia, 0)
+  io.println("Totale rotoli rimossi: " <> int.to_string(totale))
 }
